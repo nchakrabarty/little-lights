@@ -1,0 +1,183 @@
+<title>Little Lights</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Nunito+Sans:wght@400;700&display=swap">
+<style>
+/* Layout: night hero panel with string-of-lights motif, then filters and snow event cards on a mist ground (Little Lights brand) */
+:root{
+  --mist:#EEF2F1; --snow:#FFFFFF; --fog:#DCE4E2; --night:#14262B; --ink:#1B2A2E; --ink-muted:#56676A;
+  --on-night:#F4F1E8; --cedar:#2F5D50; --lantern:#F2A541; --ember:#A9442F; --focus:#2F5D50;
+  --display:"Bricolage Grotesque","Trebuchet MS",Arial,sans-serif; --body:"Nunito Sans","Segoe UI",Arial,sans-serif;
+  --r-sm:6px; --r-md:12px; --r-lg:20px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --mist:#0F1D21; --snow:#172A2F; --fog:#24383D; --night:#22404A; --ink:#EAF0EE; --ink-muted:#9FB2B3;
+  --cedar:#7FB8A4; --ember:#E8805C; --focus:#F2A541; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --mist:#0F1D21; --snow:#172A2F; --fog:#24383D; --night:#22404A; --ink:#EAF0EE; --ink-muted:#9FB2B3;
+  --cedar:#7FB8A4; --ember:#E8805C; --focus:#F2A541; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--mist);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+.hero{background:var(--night);color:var(--on-night);border-radius:var(--r-lg);padding:28px 24px 24px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.wordmark{font-family:var(--display);font-weight:700;font-size:1.25rem;letter-spacing:-.01em;display:flex;align-items:baseline;gap:3px}
+.wordmark i{display:inline-block;width:.42em;height:.42em;border-radius:999px;background:var(--lantern)}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,6vw,3rem);line-height:1.05;margin:0;letter-spacing:-.02em;text-wrap:balance;max-width:16ch}
+.hero p{margin:0;max-width:56ch;color:var(--on-night);opacity:.88}
+.hero .meta{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;opacity:1;color:var(--lantern)}
+.lights{display:block;width:100%;height:36px;margin-top:4px}
+.lights path{fill:none;stroke:var(--on-night);stroke-opacity:.35;stroke-width:1.5}
+.lights .l{fill:var(--lantern)} .lights .e{fill:#E8805C}
+.filters{display:flex;flex-direction:column;gap:12px;background:var(--snow);border-radius:var(--r-md);padding:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.lbl{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);min-width:64px}
+.chip{font:inherit;font-size:.9rem;border:1.5px solid var(--fog);background:var(--snow);color:var(--ink);padding:6px 12px;border-radius:var(--r-sm);cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--cedar);border-color:var(--cedar);color:var(--snow)}
+.chip:focus-visible,input:focus-visible,a:focus-visible,.clear:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.toggle{display:flex;align-items:center;gap:6px;font-size:.92rem;cursor:pointer}
+.toggle input{accent-color:var(--cedar);width:18px;height:18px}
+input[type=date]{font:inherit;font-size:.92rem;padding:5px 8px;border:1.5px solid var(--fog);border-radius:var(--r-sm);background:var(--snow);color:var(--ink)}
+.clear{font:inherit;font-size:.88rem;font-weight:700;background:none;border:none;color:var(--cedar);cursor:pointer;text-decoration:underline;padding:0}
+.count{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted)}
+.list{display:flex;flex-direction:column;gap:16px}
+.card{background:var(--snow);border-radius:var(--r-md);padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0}
+@media (max-width:520px){.card{padding:16px}.hero{padding:22px 16px 18px}}
+.top{display:flex;flex-direction:column;gap:2px}
+.where{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--cedar)}
+.card h2{font-family:var(--display);font-weight:700;font-size:1.4rem;line-height:1.2;margin:0;text-wrap:balance}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.75rem;font-weight:700;padding:3px 9px;border-radius:var(--r-sm);background:var(--fog);color:var(--ink)}
+.tag.free{background:var(--lantern);color:#1B2A2E}
+.tag.ok{background:transparent;border:1.5px solid var(--cedar);color:var(--cedar);padding:1.5px 7.5px}
+.tag.check{background:transparent;border:1.5px solid var(--ember);color:var(--ember);padding:1.5px 7.5px;text-transform:uppercase;letter-spacing:.06em}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:3px 14px;font-size:.94rem;margin:0}
+.facts dt{color:var(--ink-muted);font-weight:700} .facts dd{margin:0;min-width:0}
+.note{font-size:.94rem;margin:0;max-width:62ch}
+.season{max-width:520px}
+.bar{position:relative;height:8px;border-radius:999px;background:var(--fog);overflow:hidden}
+.bar span{position:absolute;top:0;bottom:0;background:var(--cedar);border-radius:999px}
+.barlab{display:flex;justify-content:space-between;font-size:.72rem;font-weight:700;color:var(--ink-muted);font-variant-numeric:tabular-nums;margin-top:3px}
+.src{font-size:.86rem;color:var(--ink-muted)}
+.src a{color:var(--cedar);font-weight:700}
+.empty{padding:28px;color:var(--ink-muted);background:var(--snow);border-radius:var(--r-md)}
+.aside{font-size:.92rem;color:var(--ink-muted);display:flex;flex-direction:column;gap:8px;max-width:62ch}
+.aside strong{color:var(--ink)}
+footer{border-top:1.5px solid var(--fog);padding-top:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.82rem;color:var(--ink-muted)}
+footer b{font-family:var(--display);color:var(--ink)}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="wordmark" aria-label="Little Lights">Little Lights<i aria-hidden="true"></i></div>
+    <h1>22 winter outings for Lower Mainland families</h1>
+    <p>Light walks, markets, skating, trains and parades in Vancouver, Burnaby, Surrey, Langley, Fort Langley, Maple Ridge, Coquitlam and Port Coquitlam. Dec 1 to Jan 31.</p>
+    <p class="meta">Details checked Nov 26, 2026 · Confirm on the source before you go</p>
+    <svg class="lights" viewBox="0 0 600 36" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 8 Q 300 40 600 8"/>
+      <circle class="l" cx="30" cy="11" r="5"/><circle class="l" cx="90" cy="17" r="5"/><circle class="e" cx="150" cy="21" r="5"/>
+      <circle class="l" cx="210" cy="24" r="5"/><circle class="l" cx="270" cy="25" r="5"/><circle class="l" cx="330" cy="25" r="5"/>
+      <circle class="l" cx="390" cy="24" r="5"/><circle class="e" cx="450" cy="21" r="5"/><circle class="l" cx="510" cy="17" r="5"/><circle class="l" cx="570" cy="11" r="5"/>
+    </svg>
+  </header>
+
+  <section class="filters" aria-label="Filters">
+    <div class="row" id="cityRow"><span class="lbl">City</span></div>
+    <div class="row" id="typeRow"><span class="lbl">Type</span></div>
+    <div class="row">
+      <span class="lbl">Open on</span>
+      <input type="date" id="onDate" min="2026-12-01" max="2027-01-31" aria-label="Show events open on this date">
+      <label class="toggle"><input type="checkbox" id="freeOnly"> Free only</label>
+      <label class="toggle"><input type="checkbox" id="confirmedOnly"> 2026 dates confirmed</label>
+      <button class="clear" id="clear" type="button">Clear filters</button>
+    </div>
+  </section>
+
+  <div class="count" id="count" aria-live="polite"></div>
+  <div class="list" id="list"></div>
+
+  <div class="aside">
+    <div><strong>Not running this year:</strong> the Stanley Park Christmas train. Bright Nights moved to Noël Surrey at Cloverdale Fairgrounds; the train site hosts Astra Lumina instead.</div>
+    <div><strong>“Check source”</strong> means the 2026 dates or prices weren’t published when this list was made, so the entry uses last season’s pattern.</div>
+    <div>Prices are before tax and fees, and change by date and time slot. Kids’ free-age cutoffs differ by event.</div>
+  </div>
+  <footer><span><b>Little Lights</b> · Winter 2026–27</span><span>Dates and prices change. Check each source before you go.</span></footer>
+</div>
+
+<script>
+const EVENTS = [
+ {name:"VanDusen Festival of Lights",city:"Vancouver",where:"VanDusen Botanical Garden, 5251 Oak St",start:"2026-11-27",end:"2027-01-03",type:"Lights",setting:"Outdoor",cost:"Paid",price:"2025 prices: adult $29, youth/senior $19, child 5–12 $12, 4 and under free (ticket required)",hours:"4–10 pm daily, last entry 9 pm; closed Dec 25",note:"Timed-entry tickets sold online only. Sensory-friendly evening Tue Dec 1. Parking at the garden is free this season.",status:"ok",src:"https://vancouver.ca/parks-recreation-culture/festival-of-lights.aspx",srcName:"City of Vancouver"},
+ {name:"Astra Lumina night walk",city:"Vancouver",where:"Stanley Park Railway site, 690 Pipeline Rd",start:"2026-10-22",end:"2026-12-31",type:"Lights",setting:"Outdoor",cost:"Paid",price:"About $33–$43 depending on date and slot",hours:"Evening timed entry; walk takes about 1 hour",note:"Star-themed light and sound walk, all ages. Some paths are unpaved and bumpy for strollers. Paid parking.",status:"ok",src:"https://vancouver.ca/news-calendar/astra-lumina-night-walk-sep-2026.aspx",srcName:"City of Vancouver"},
+ {name:"Vancouver Christmas Market",city:"Vancouver",where:"Jack Poole Plaza, 1055 Canada Place",start:"2026-11-16",end:"2026-12-24",type:"Market",setting:"Outdoor",cost:"Paid",price:"Timed admission tickets, prices vary by slot",hours:"Various time slots",note:"German-style market with a carousel and walk-in Christmas tree. December weekend evenings sell out first.",status:"ok",src:"https://www.vancouverchristmasmarket.com/plan-your-visit/",srcName:"Vancouver Christmas Market"},
+ {name:"St. Paul’s Lights of Hope",city:"Vancouver",where:"St. Paul’s Hospital, 1081 Burrard St",start:"2026-11-12",end:"2027-01-02",type:"Lights",setting:"Outdoor",cost:"Free",price:"Free; donations welcome",hours:"Lit nightly",note:"Quick stop downtown: building-wide lights and stars. End date listed only as “through the holidays”; last year’s display ran to Jan 2.",status:"check",src:"https://helpstpauls.com/lights-of-hope/",srcName:"St. Paul’s Foundation"},
+ {name:"Robson Square Ice Rink",city:"Vancouver",where:"800 Robson St",start:"2026-12-01",end:"2027-01-31",type:"Skating",setting:"Covered outdoor",cost:"Free",price:"Free skating; 2025 rentals $5 with helmet",hours:"2025 season: 9 am–9 pm daily",note:"Covered rink downtown. Helmets required for 12 and under. 2026–27 opening date not yet announced; last season opened Nov 28 and ran to Feb 28.",status:"check",src:"https://www.robsonsquare.com/",srcName:"Robson Square"},
+ {name:"Polar Bear Swim",city:"Vancouver",where:"English Bay Beach",start:"2027-01-01",end:"2027-01-01",type:"Festival",setting:"Outdoor",cost:"Free",price:"Free to watch or swim",hours:"2026 edition: beach site 11:30 am–4 pm, swim 2:30 pm",note:"Fun to watch with kids; food trucks and music on the beach. 2027 times not yet posted.",status:"check",src:"https://vancouver.ca/parks-recreation-culture/polar-bear-swim.aspx",srcName:"City of Vancouver"},
+
+ {name:"Festive Village at Burnaby Village Museum",city:"Burnaby",where:"6501 Deer Lake Ave",start:"2026-11-25",end:"2027-01-03",type:"Heritage",setting:"Outdoor",cost:"Free",price:"Free gate admission; carousel rides extra (about $2.70 last year)",hours:"Hours vary by day",note:"1920s village with lights, carollers, Father Christmas on select dates and a 1912 carousel. Check the museum calendar for open days.",status:"ok",src:"https://www.burnaby.ca/our-city/news/2026-04-17/burnaby-unveils-2026-civic-special-events-program",srcName:"City of Burnaby"},
+
+ {name:"Lights at Lafarge",city:"Coquitlam",where:"Town Centre Park, 1299 Pinetree Way",start:"2026-11-27",end:"2027-02-28",type:"Lights",setting:"Outdoor",cost:"Free",price:"Free",hours:"4–10 pm nightly",note:"1.2 km stroller-friendly loop around the lake, steps from Lafarge Lake–Douglas SkyTrain. Park Spark family activities on select nights. Quieter before 6 pm and after 8 pm.",status:"ok",src:"https://www.coquitlam.ca/lights",srcName:"City of Coquitlam"},
+
+ {name:"Parade of Lights",city:"Port Coquitlam",where:"Downtown Port Coquitlam",start:"2026-12-05",end:"2026-12-05",type:"Parade",setting:"Outdoor",cost:"Free",price:"Free",hours:"Evening (last year: parade at 5 pm, activities 1–5 pm)",note:"Lit-up City vehicles and Santa at the end of the parade. Family activities at Port Coquitlam Community Centre beforehand.",status:"ok",src:"https://www.portcoquitlam.ca/explore-poco/events/winter-city",srcName:"City of Port Coquitlam"},
+ {name:"CPKC Holiday Train – Port Coquitlam",city:"Port Coquitlam",where:"Kingsway Ave between Mary Hill Rd & Wilson Ave",start:"2026-12-20",end:"2026-12-20",type:"Train",setting:"Outdoor",cost:"Free",price:"Free; bring food or cash for the food bank",hours:"6:45–7:15 pm",note:"Final stop of the national tour: lit-up train and a short concert from a boxcar stage. No rides.",status:"ok",src:"https://dailyhive.com/vancouver/cpkc-holiday-train-bc-headliner-2026",srcName:"Daily Hive"},
+ {name:"Holiday skates at PoCo Community Centre",city:"Port Coquitlam",where:"2150 Wilson Ave",start:"2026-12-19",end:"2027-01-03",type:"Skating",setting:"Indoor",cost:"Paid",price:"Regular drop-in rates",hours:"See City skate schedule",note:"Last year included Skate with Santa and Christmas Eve / New Year’s Eve sessions. 2026 schedule not yet posted.",status:"check",src:"https://www.portcoquitlam.ca/explore-poco/events/winter-city",srcName:"City of Port Coquitlam"},
+
+ {name:"Noël Surrey with the Magic of Bright Nights",city:"Surrey",where:"Cloverdale Fairgrounds, 17905 62 Ave",start:"2026-11-27",end:"2026-12-29",type:"Lights",setting:"Indoor + outdoor",cost:"Paid",price:"Kids 6 and under free; 2025 adult $22–$25, youth/senior $17–$19",hours:"3–9:30 pm; closed some dates incl. Dec 24–25",note:"Firefighter-built Bright Nights light walk (formerly Stanley Park), Santa, rides and a heated indoor market. Ticket includes parking.",status:"ok",src:"https://www.ctvnews.ca/vancouver/events/article/noel-surrey-with-the-magic-of-bright-nights/",srcName:"CTV News"},
+ {name:"Skating at Surrey Civic Plaza",city:"Surrey",where:"13450 104 Ave, by Surrey Central SkyTrain",start:"2026-11-26",end:"2027-02-15",type:"Skating",setting:"Covered outdoor",cost:"Free",price:"Free; skate rental $5",hours:"Winter break Dec 19–Jan 3: public skate 12–9 pm",note:"40-minute sessions with ice cleaning between. Fire pits, games and weekend activities; Breakfast with Santa is new this year.",status:"ok",src:"https://www.surrey.ca/plazaskating",srcName:"City of Surrey"},
+ {name:"Bear Creek Park Christmas Train",city:"Surrey",where:"13750 88 Ave",start:"2026-12-01",end:"2026-12-31",type:"Train",setting:"Outdoor",cost:"Paid",price:"Last year about $12.50–$13; 2 and under free",hours:"Last year: Santa Express daytime, Night Train 6–9 pm",note:"Miniature train through a lit forest. 2026 schedule not confirmed; last year it ran Dec 1–31.",status:"check",src:"https://bctrains.com",srcName:"BC Trains"},
+
+ {name:"Glow Langley: Christmas Treasures",city:"Langley",where:"6690 216 St",start:"2026-11-19",end:"2027-01-02",type:"Lights",setting:"Indoor + outdoor",cost:"Paid",price:"Timed tickets online; prices vary by date",hours:"Select dates, closed Sundays; slots roughly 4–8 pm",note:"10th year: 2 million lights, a kids’ treasure-hunt mission, a three-storey palace, Santa and food trucks. Free parking.",status:"ok",src:"https://langley.glowgardens.com/",srcName:"Glow Langley"},
+ {name:"Merry & Bright at Martini Town",city:"Langley",where:"1123 272 St (film backlot)",start:"2026-11-20",end:"2026-12-31",type:"Lights",setting:"Outdoor",cost:"Paid",price:"From $24 adult; discounts for seniors, youth, children",hours:"Select dates; timed entry",note:"A working film set dressed as a Christmas movie town, with Santa and live music. Fully outdoors, so dress warmly.",status:"ok",src:"https://merrybright.ca/tickets",srcName:"Merry & Bright"},
+ {name:"Langley Christmas Village",city:"Langley",where:"Downtown Langley City",start:"2026-11-26",end:"2026-12-24",type:"Market",setting:"Outdoor",cost:"Free",price:"Free entry",hours:"Daily",note:"New this year, from the Shipyards Christmas Market team: around 100 vendors, daily entertainment and a Santa chalet.",status:"ok",src:"https://www.langleycity.ca/community-culture/arts-culture/events-calendar/langley-christmas-village",srcName:"City of Langley"},
+ {name:"Holiday Lights in Williams Park",city:"Langley",where:"68 Ave & 238 St, Township of Langley",start:"2026-12-13",end:"2026-12-28",type:"Lights",setting:"Drive-through",cost:"Free",price:"Free; donations accepted",hours:"Evenings (last year)",note:"Volunteer-run drive-through light display, easy with sleepy toddlers. 2026 dates not confirmed; dates shown are last year’s.",status:"check",src:"https://www.tol.ca",srcName:"Township of Langley"},
+
+ {name:"Holiday programming at Fort Langley National Historic Site",city:"Fort Langley",where:"23433 Mavis Ave",start:"2026-12-16",end:"2026-12-30",type:"Heritage",setting:"Indoor + outdoor",cost:"Paid",price:"Regular admission; youth 17 and under free",hours:"10 am–4:30 pm; closed Dec 24–26, Dec 31, Jan 1",note:"Past years: ornament crafts, roasted chestnuts by the fire and holiday-themed tours. 2026 program dates not yet posted; dates shown follow recent years.",status:"check",src:"https://parks.canada.ca/lhn-nhs/bc/langley",srcName:"Parks Canada"},
+
+ {name:"Winter Fest & Santa Claus Parade",city:"Maple Ridge",where:"Memorial Peace Park, downtown",start:"2026-12-05",end:"2026-12-05",type:"Parade",setting:"Outdoor",cost:"Free",price:"Free; food bank donations welcome",hours:"Last year 4–8 pm, parade 6–7:30 pm",note:"Usually the first Saturday of December. 2026 date not yet confirmed by the City; Dec 5 is the first Saturday.",status:"check",src:"https://www.mapleridge.ca/Holidays",srcName:"City of Maple Ridge"},
+ {name:"Timberline Country Christmas",city:"Maple Ridge",where:"Timberline Ranch",start:"2026-12-05",end:"2026-12-20",type:"Farm",setting:"Outdoor",cost:"Paid",price:"Timed reservations required",hours:"Dec 5, 12, 13, 19, 20",note:"Rustic Christmas on a 73-acre horse ranch, pitched as an alternative to mall Santa lines.",status:"check",src:"https://discover.mapleridge.ca/allevents/246095",srcName:"Discover Maple Ridge"},
+ {name:"CPKC Holiday Train – Maple Ridge",city:"Maple Ridge",where:"Port Haney, by Billy Miner Pub, 22355 River Rd",start:"2026-12-19",end:"2026-12-19",type:"Train",setting:"Outdoor",cost:"Free",price:"Free; bring food or cash for Friends in Need Food Bank",hours:"8–8:30 pm",note:"Lit-up train and a short concert. Park downtown and walk down 224 St.",status:"ok",src:"https://dailyhive.com/vancouver/cpkc-holiday-train-bc-headliner-2026",srcName:"Daily Hive"}
+];
+
+const WS=Date.UTC(2026,11,1), WE=Date.UTC(2027,0,31), DAY=864e5, SPAN=(WE-WS)/DAY+1;
+const d = s => { const [y,m,dd]=s.split("-").map(Number); return Date.UTC(y,m-1,dd); };
+const fmt = t => new Date(t).toLocaleDateString("en-CA",{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"});
+const CITIES=["Vancouver","Burnaby","Surrey","Langley","Fort Langley","Maple Ridge","Coquitlam","Port Coquitlam"];
+const TYPES=[...new Set(EVENTS.map(e=>e.type))].sort();
+const state={city:new Set(),type:new Set(),free:false,confirmed:false,on:""};
+
+function chips(rowId,items,set){
+  const row=document.getElementById(rowId);
+  items.forEach(v=>{const b=document.createElement("button");b.type="button";b.className="chip";b.textContent=v;b.setAttribute("aria-pressed","false");
+    b.onclick=()=>{set.has(v)?set.delete(v):set.add(v);b.setAttribute("aria-pressed",set.has(v));render();};row.appendChild(b);});
+}
+chips("cityRow",CITIES,state.city); chips("typeRow",TYPES,state.type);
+const $=id=>document.getElementById(id);
+$("freeOnly").onchange=e=>{state.free=e.target.checked;render()};
+$("confirmedOnly").onchange=e=>{state.confirmed=e.target.checked;render()};
+$("onDate").onchange=e=>{state.on=e.target.value;render()};
+$("clear").onclick=()=>{state.city.clear();state.type.clear();state.free=false;state.confirmed=false;state.on="";
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));$("freeOnly").checked=false;$("confirmedOnly").checked=false;$("onDate").value="";render();};
+
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function render(){
+  const on=state.on?d(state.on):null;
+  const rows=EVENTS.filter(e=>(!state.city.size||state.city.has(e.city))&&(!state.type.size||state.type.has(e.type))
+    &&(!state.free||e.cost==="Free")&&(!state.confirmed||e.status==="ok")&&(on===null||(d(e.start)<=on&&d(e.end)>=on)))
+    .sort((a,b)=>Math.max(d(a.start),WS)-Math.max(d(b.start),WS)||d(a.end)-d(b.end));
+  $("count").textContent=`${rows.length} of ${EVENTS.length} events`;
+  $("list").innerHTML=rows.length?rows.map(e=>{
+    const s=Math.max(d(e.start),WS),en=Math.min(d(e.end),WE);
+    const left=(s-WS)/DAY/SPAN*100,w=Math.max(((en-s)/DAY+1)/SPAN*100,1.6);
+    const runs=`${fmt(d(e.start))}${e.start===e.end?"":" – "+fmt(d(e.end))}`;
+    return `<article class="card">
+      <div class="top"><span class="where">${esc(e.city)}</span><h2>${esc(e.name)}</h2></div>
+      <div class="tags"><span class="tag ${e.cost==="Free"?"free":""}">${e.cost==="Free"?"Free":e.cost}</span><span class="tag">${esc(e.type)}</span><span class="tag">${esc(e.setting)}</span>
+        <span class="tag ${e.status==="ok"?"ok":"check"}">${e.status==="ok"?"2026 dates confirmed":"Check source"}</span></div>
+      <dl class="facts"><dt>Runs</dt><dd>${runs}</dd><dt>Hours</dt><dd>${esc(e.hours)}</dd><dt>Price</dt><dd>${esc(e.price)}</dd><dt>Where</dt><dd>${esc(e.where)}</dd></dl>
+      <div class="season"><div class="bar" role="img" aria-label="Open ${runs}"><span style="left:${left}%;width:${w}%"></span></div>
+        <div class="barlab"><span>Dec 1</span><span>Jan 1</span><span>Jan 31</span></div></div>
+      <p class="note">${esc(e.note)}</p>
+      <div class="src">Source: <a href="${e.src}" target="_blank" rel="noopener">${esc(e.srcName)}</a></div>
+    </article>`}).join(""):`<div class="empty">No events match these filters. Try another city or clear the date.</div>`;
+}
+render();
+</script>
