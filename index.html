@@ -1,3 +1,10 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Winter outings for Lower Mainland families: light walks, decorated streets, markets, skating, trains and parades, Dec 1, 2026 to Jan 31, 2027.">
+<meta name="theme-color" content="#14262B">
 <title>Little Lights</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,16 +26,20 @@
 *{box-sizing:border-box}
 body{background:var(--mist);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
   padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));padding-block:20px 48px}
-.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+.wrap{max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+.main{display:flex;flex-direction:column;gap:16px}
+.content{display:flex;flex-direction:column;gap:12px;min-width:0}
 .hero{background:var(--night);color:var(--on-night);border-radius:var(--r-lg);padding:28px 24px 24px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
 .wordmark{font-family:var(--display);font-weight:700;font-size:1.25rem;letter-spacing:-.01em;display:flex;align-items:baseline;gap:3px}
 .wordmark i{display:inline-block;width:.42em;height:.42em;border-radius:999px;background:var(--lantern)}
-.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(1.9rem,6vw,3rem);line-height:1.05;margin:0;letter-spacing:-.02em;text-wrap:balance;max-width:16ch}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,5.5vw,3.6rem);line-height:1.05;margin:0;letter-spacing:-.02em;text-wrap:balance;max-width:16ch}
 .hero p{margin:0;max-width:56ch;color:var(--on-night);opacity:.88}
 .hero .meta{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;opacity:1;color:var(--lantern)}
-.lights{display:block;width:100%;height:36px;margin-top:4px}
-.lights path{fill:none;stroke:var(--on-night);stroke-opacity:.35;stroke-width:1.5}
-.lights .l{fill:var(--lantern)} .lights .e{fill:#E8805C}
+.lights{position:relative;height:36px;margin-top:4px}
+.lights svg{position:absolute;inset:0;width:100%;height:100%}
+.lights path{fill:none;stroke:var(--on-night);stroke-opacity:.35;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.lights span{position:absolute;width:10px;height:10px;margin-left:-5px;border-radius:999px;background:var(--lantern)}
+.lights span.e{background:#E8805C}
 .filters{display:flex;flex-direction:column;gap:12px;background:var(--snow);border-radius:var(--r-md);padding:16px}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .lbl{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);min-width:64px}
@@ -42,7 +53,7 @@ input[type=date]{font:inherit;font-size:.92rem;padding:5px 8px;border:1.5px soli
 .count{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted)}
 .list{display:flex;flex-direction:column;gap:16px}
 .card{background:var(--snow);border-radius:var(--r-md);padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0}
-@media (max-width:520px){.card{padding:16px}.hero{padding:22px 16px 18px}}
+
 .top{display:flex;flex-direction:column;gap:2px}
 .where{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--cedar)}
 .card h2{font-family:var(--display);font-weight:700;font-size:1.4rem;line-height:1.2;margin:0;text-wrap:balance}
@@ -65,7 +76,24 @@ input[type=date]{font:inherit;font-size:.92rem;padding:5px 8px;border:1.5px soli
 .aside strong{color:var(--ink)}
 footer{border-top:1.5px solid var(--fog);padding-top:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.82rem;color:var(--ink-muted)}
 footer b{font-family:var(--display);color:var(--ink)}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media (pointer:coarse){.chip{min-height:44px}.toggle{min-height:44px}input[type=date]{min-height:44px}.clear{min-height:44px}}
+@media (max-width:1023px){#cityRow,#typeRow{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px}#cityRow::-webkit-scrollbar,#typeRow::-webkit-scrollbar{display:none}#cityRow .chip,#typeRow .chip{flex:none;white-space:nowrap}#cityRow .lbl,#typeRow .lbl{flex:none;min-width:48px}}
+@media (max-width:520px){.card{padding:16px}.hero{padding:22px 16px 18px}.card h2{font-size:1.25rem}}
+@media (max-width:360px){.facts{grid-template-columns:1fr}.facts dd{margin-bottom:6px}}
+@media (min-width:768px){.hero{padding:36px 36px 28px}}
+@media (min-width:1024px){
+  .main{display:grid;grid-template-columns:300px minmax(0,1fr);gap:28px;align-items:start}
+  .side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);max-height:calc(100vh - 32px);overflow:auto}
+  .side .lbl{min-width:100%}
+  .hero{padding:44px 48px 32px}
+  .hero h1{max-width:22ch}
+}
+@media (min-width:1440px){.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="hero">
@@ -73,14 +101,11 @@ footer b{font-family:var(--display);color:var(--ink)}
     <h1>Winter outings for Lower Mainland families</h1>
     <p>Light walks, decorated streets, markets, skating, trains and parades in Vancouver, Burnaby, Surrey, Langley, Fort Langley, Maple Ridge, Coquitlam and Port Coquitlam. Dec 1 to Jan 31.</p>
     <p class="meta">Details checked Nov 26, 2026 · Confirm on the source before you go</p>
-    <svg class="lights" viewBox="0 0 600 36" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 8 Q 300 40 600 8"/>
-      <circle class="l" cx="30" cy="11" r="5"/><circle class="l" cx="90" cy="17" r="5"/><circle class="e" cx="150" cy="21" r="5"/>
-      <circle class="l" cx="210" cy="24" r="5"/><circle class="l" cx="270" cy="25" r="5"/><circle class="l" cx="330" cy="25" r="5"/>
-      <circle class="l" cx="390" cy="24" r="5"/><circle class="e" cx="450" cy="21" r="5"/><circle class="l" cx="510" cy="17" r="5"/><circle class="l" cx="570" cy="11" r="5"/>
-    </svg>
+    <div class="lights" aria-hidden="true"><svg viewBox="0 0 600 36" preserveAspectRatio="none"><path d="M0 8 Q 300 40 600 8"/></svg><span style="left:5%;top:6.0px"></span><span style="left:15%;top:11.0px"></span><span class="e" style="left:25%;top:15.0px"></span><span style="left:35%;top:17.6px"></span><span style="left:45%;top:18.8px"></span><span style="left:55%;top:18.8px"></span><span style="left:65%;top:17.6px"></span><span class="e" style="left:75%;top:15.0px"></span><span style="left:85%;top:11.0px"></span><span style="left:95%;top:6.0px"></span></div>
   </header>
 
+  <div class="main">
+  <aside class="side">
   <section class="filters" aria-label="Filters">
     <div class="row" id="cityRow"><span class="lbl">City</span></div>
     <div class="row" id="typeRow"><span class="lbl">Type</span></div>
@@ -92,9 +117,12 @@ footer b{font-family:var(--display);color:var(--ink)}
       <button class="clear" id="clear" type="button">Clear filters</button>
     </div>
   </section>
-
+  </aside>
+  <div class="content">
   <div class="count" id="count" aria-live="polite"></div>
   <div class="list" id="list"></div>
+  </div>
+  </div>
 
   <div class="aside">
     <div><strong>Decorated streets and houses</strong> are private homes run at the owners’ expense, so they can change or stop without notice. Street names are given here; exact addresses are on each source. Please keep voices down, don’t block driveways, and use the donation box if there is one.</div>
@@ -196,3 +224,6 @@ function render(){
 }
 render();
 </script>
+
+</body>
+</html>
